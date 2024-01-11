@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My API Client</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #response-container { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>My API Client</h1>
+  <label for="request-input">API Request:</label>
+  <textarea id="request-input" rows="4" cols="50"></textarea>
+  <button onclick="sendRequest()">Send Request</button>
+  <div id="response-container">
+    <h3>Response:</h3>
+    <pre id="response-content"></pre>
+  </div>
+
+  <script>
+    function sendRequest() {
+      const requestInput = document.getElementById('request-input').value;
+
+      fetch('http://localhost:3000/api/endpoint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ requestData: requestInput })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('response-content').innerText = JSON.stringify(data, null, 2);
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>
